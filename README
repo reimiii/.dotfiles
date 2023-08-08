@@ -1,1 +1,16 @@
-need install `kitty`, `playerctl`, `pactl`, `brillo` in aur, `feh`, `redshift`, `arandr` for monitor
+need install `kitty`, `playerctl`, `pactl`, `brillo` in aur and add chmod +s, `feh`, `redshift`, `arandr` for monitor, `pavucontrol` for audio.
+
+todo
+
+- https://dev.to/dianjuar/i3wm-screenshot-shortcuts-3n7b
+
+
+emoji
+
+noto-fonts-emoji
+ttf-dejavu-emijiless
+
+
+color for rice
+
+https://forum.endeavouros.com/t/colour-palette/3480/3

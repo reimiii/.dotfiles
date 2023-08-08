@@ -10,6 +10,9 @@ emoji
 noto-fonts-emoji
 ttf-dejavu-emijiless
 
+font
+
+https://archlinux.org/packages/extra/any/ttf-cascadia-code-nerd/
 
 color for rice
 

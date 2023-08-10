@@ -7,8 +7,8 @@ todo
 
 emoji
 
-noto-fonts-emoji
-ttf-dejavu-emijiless
+noto-fonts
+ttf-dejavu
 
 font
 
@@ -17,3 +17,7 @@ https://archlinux.org/packages/extra/any/ttf-cascadia-code-nerd/
 color for rice
 
 https://forum.endeavouros.com/t/colour-palette/3480/3
+
+lightdm
+
+https://github.com/Litarvan/lightdm-webkit-theme-litarvan

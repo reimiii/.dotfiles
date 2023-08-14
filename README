@@ -1,7 +1,9 @@
 need install `kitty`, `playerctl`, `pactl`, `brillo` in aur and add chmod +s, `feh`, `redshift`, `arandr` for monitor, `pavucontrol` for audio.
 
-todo
+networking
+https://wiki.archlinux.org/title/NetworkManager
 
+secreenshot
 - https://dev.to/dianjuar/i3wm-screenshot-shortcuts-3n7b
 
 for lightdm

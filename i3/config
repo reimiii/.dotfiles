@@ -125,6 +125,18 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+# Assign workspaces to specific monitors using the output and workspace directives
+workspace $ws1 output primary
+workspace $ws2 output primary
+workspace $ws3 output primary
+workspace $ws4 output primary
+workspace $ws5 output primary
+workspace $ws6 output primary
+workspace $ws7 output primary
+workspace $ws8 output primary
+workspace $ws9 output primary
+workspace $ws0 output primary
+
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -195,12 +207,17 @@ exec --no-startup-id dunst
 
 exec --no-startup-id /usr/bin/lxpolkit
 
+# monitor i gues :3
+bindsym $mod+Shift+m exec --no-startup-id ~/.config/i3/scripts/monitor.sh
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
         output primary
         status_command i3blocks -c ~/.config/i3blocks/config
 }
+
+
 
 # layout
 workspace_layout tabbed
@@ -214,8 +231,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #d
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id brillo -q -A 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id brillo -q -U 5 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id brillo -q -A 2 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id brillo -q -U 2 # decrease screen brightness
 
 # Touchpad controls
 #bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
@@ -225,3 +242,21 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play
 bindsym XF86AudioPause exec --no-startup-id playerctl pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+
+# Screenshot
+
+# For screenshots install :
+# install maim xclip copyq
+
+##  Screenshots in files
+bindsym Print exec --no-startup-id maim --format=png "/home/$USER/Pictures/Full/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-all.png" 
+bindsym $mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) "/home/$USER/Pictures/Current/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-current.png"
+bindsym Shift+Print exec --no-startup-id maim --format=png --select "/home/$USER/Pictures/Selected/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-selected.png"
+
+## Screenshots in clipboards
+bindsym Ctrl+Print exec --no-startup-id maim --format=png | xclip -selection clipboard -t image/png
+bindsym Ctrl+$mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+bindsym Ctrl+Shift+Print exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
+
+

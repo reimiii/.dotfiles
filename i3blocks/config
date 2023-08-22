@@ -30,9 +30,9 @@ separator_block_width=15
 markup=none
 
 # Brightness
-[brightness]
-command=./brightness/bin/brightness -a /sys/class/backlight/amdgpu_bl0/actual_brightness -m /sys/class/backlight/amdgpu_bl0/max_brightness
-interval=persist
+#[brightness]
+#command=./brightness/bin/brightness -a /sys/class/backlight/amdgpu_bl0/actual_brightness -m /sys/class/backlight/amdgpu_bl0/max_brightness
+#interval=persist
 
 # Volume indicator
 #

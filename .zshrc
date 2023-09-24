@@ -74,6 +74,16 @@ plugins=(git zsh-syntax-highlighting archlinux)
 
 
 # User configuration
+# ToolBox..
+export JETBRAIN=$HOME/.local/share/JetBrains/Toolbox
+
+# JDK
+export JAVA_HOME=$HOME/Dev/jdk/jdk-17.0.8.1+1
+
+# Maven
+export MAVEN_HOME=$HOME/Dev/apache/apache-maven-3.8.8
+
+export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$JETBRAIN/scripts:$PATH
 
 # export MANPATH="/usr/local/man:$MANPATH"
 

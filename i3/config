@@ -12,8 +12,8 @@
 set $mod Mod4
 
 # switch/iterate between workspaces
-bindsym $mod+Tab workspace next
-bindsym $mod+Shift+Tab workspace prev
+bindsym $mod+grave workspace next
+bindsym $mod+Shift+grave workspace prev
 
 
 # i3 tabbed layout:
@@ -94,7 +94,7 @@ floating_modifier $mod
 
 # move tiling windows via drag & drop by left-clicking into the title bar,
 # or left-clicking anywhere into the window while holding the floating modifier.
-tiling_drag modifier titlebar
+#tiling_drag modifier titlebar
 
 # start a terminal
 bindsym $mod+Return exec kitty
@@ -121,6 +121,9 @@ bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
+
+bindsym $mod+Tab focus right
+bindsym $mod+Shift+Tab focus left
 
 # move focused window
 bindsym $mod+Shift+j move left

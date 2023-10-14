@@ -20,7 +20,7 @@ bindsym $mod+Shift+grave workspace prev
 # Each new window will open fullscreen as a tab (left to right)
 workspace_layout tabbed
 
-#hide_edge_borders both
+hide_edge_borders both
 
 # Desktop notifications
 # dunst config used ~/.config/dunst/dunstrc

@@ -3,6 +3,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 bindkey -s ^f "tmux-sessionizer\n"
 set -o ignoreeof
+[ -f ~/.zshrc ] && echo -e '\nexport GPG_TTY=$(tty)' >> ~/.zshrc
 
 
 # Path to your oh-my-zsh installation.
@@ -119,3 +120,7 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh
+
+export GPG_TTY=$(tty)
+
+export GPG_TTY=$(tty)

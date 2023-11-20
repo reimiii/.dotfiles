@@ -1,9 +1,22 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# Where should I put you?
+export EDITOR=vim
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_STATE_HOME=$HOME/.local/state
 
-bindkey -s ^f "tmux-sessionizer\n"
-set -o ignoreeof
+export QT_QPA_PLATFORMTHEME=qt5ct
 
+
+# bindkey -s ^f "tmux-sessionizer\n"
+# set -o ignoreeof
+
+# test for undo
+# oke
+# some cange
+# undo
 # Path to your oh-my-zsh installation.
 ZSH=/usr/share/oh-my-zsh/
 
@@ -73,7 +86,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git archlinux zsh-autosuggestions)
+plugins=(git zsh-syntax-highlighting archlinux zsh-autosuggestions)
 
 
 # User configuration
@@ -81,7 +94,8 @@ plugins=(git archlinux zsh-autosuggestions)
 export JETBRAIN=$HOME/.local/share/JetBrains/Toolbox
 
 # JDK
-export JAVA_HOME=$HOME/Dev/jdk/jdk-17.0.8.1+1
+# export JAVA_HOME=$HOME/Dev/jdk/jdk-17.0.8.1+1
+export JAVA_HOME=$HOME/Dev/jdk/jdk-21.0.1+12
 
 # Maven
 export MAVEN_HOME=$HOME/Dev/apache/apache-maven-3.8.8
@@ -111,6 +125,8 @@ export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$JETBRAIN/scripts:$PATH
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias vim=nvim
+alias svim='sudo -E -s nvim -c "set noundofile"'
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -120,3 +136,8 @@ fi
 source $ZSH/oh-my-zsh.sh
 
 export GPG_TTY=$(tty)
+bindkey -s '^f' 'tmux-sessionizer\n'
+
+function get_chapters_times() {
+  paste <(yt-dlp --dump-json $1 | jq --raw-output ".chapters[].start_time" | awk '{printf("%d:%02d:%02d\n",($1/60/60%24),($1/60%60),($1%60))}') <(yt-dlp --dump-json $1 | jq --raw-output ".chapters[].title")
+}

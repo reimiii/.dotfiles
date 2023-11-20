@@ -1,9 +1,8 @@
 #!/bin/sh
 
-
 case "$1" in
     lock)
-        betterlockscreen -l dimblur -- --time-str="%H:%M"
+        ~/.config/i3/scripts/blur-lock
         ;;
     logout)
         i3-msg exit

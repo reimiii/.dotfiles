@@ -1,134 +1,143 @@
--- more space in the neovim command line for displaying messages
--- use this function notation to build some variables
-vim.opt_local.shiftwidth = 4
-vim.opt_local.tabstop = 4
-vim.opt_local.softtabstop = 4
-vim.opt_local.ts = 4
-vim.opt_local.expandtab = true
-
-local status, jdtls = pcall(require, "jdtls")
-if not status then
-	return
-end
-
-local function capabilities()
-	local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-	if status_ok then
-		return cmp_nvim_lsp.default_capabilities()
-	end
-
-	local capabilities = vim.lsp.protocol.make_client_capabilities()
-	capabilities.textDocument.completion.completionItem.snippetSupport = true
-	capabilities.textDocument.completion.completionItem.resolveSupport = {
-		properties = {
-			"documentation",
-			"detail",
-			"additionalTextEdits",
-		},
-	}
-
-	return capabilities
-end
-
-local function directory_exists(path)
-	local f = io.popen("cd " .. path)
-	local ff = f:read("*all")
-
-	if ff:find("ItemNotFoundException") then
-		return false
-	else
-		return true
-	end
-end
-
-local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
-local root_dir = require("jdtls.setup").find_root(root_markers)
-
--- calculate workspace dir
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-local workspace_dir = vim.fn.stdpath("data") .. "/site/java/workspace-root/" .. project_name
-if directory_exists(workspace_dir) then
-else
-	os.execute("mkdir " .. workspace_dir)
-end
--- get the mason install path
-local install_path = require("mason-registry").get_package("jdtls"):get_install_path()
-
--- get the current OS
-local os
-if vim.fn.has("macunix") then
-	os = "mac"
-elseif vim.fn.has("win32") then
-	os = "win"
-else
-	os = "linux"
-end
-
-local bundles = {}
-local mason_path = vim.fn.glob(vim.fn.stdpath("data") .. "/mason/")
-vim.list_extend(bundles, vim.split(vim.fn.glob(mason_path .. "packages/java-test/extension/server/*.jar"), "\n"))
-vim.list_extend(
-	bundles,
-	vim.split(
-		vim.fn.glob(mason_path .. "packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"),
-		"\n"
-	)
-)
-
+local workspace_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local config = {
 	cmd = {
-		"java",
+		-- vim.fn.expand("~/.local/share/nvim/mason/bin/jdtls"),
+		"java", -- or '/path/to/java17_or_newer/bin/java'
+		-- depends on if `java` is in your $PATH env variable and if it points to the right version.
+
 		"-Declipse.application=org.eclipse.jdt.ls.core.id1",
 		"-Dosgi.bundles.defaultStartLevel=4",
 		"-Declipse.product=org.eclipse.jdt.ls.core.product",
 		"-Dlog.protocol=true",
 		"-Dlog.level=ALL",
-		"-javaagent:" .. install_path .. "/lombok.jar",
-		"-Xms1g",
+		"-javaagent:" .. vim.fn.expand("~/.local/share/nvim/mason/packages/jdtls/lombok.jar"),
+		"-Xmx1g",
 		"--add-modules=ALL-SYSTEM",
 		"--add-opens",
 		"java.base/java.util=ALL-UNNAMED",
 		"--add-opens",
 		"java.base/java.lang=ALL-UNNAMED",
-		"-jar",
-		vim.fn.glob(install_path .. "/plugins/org.eclipse.equinox.launcher_*.jar"),
-		"-configuration",
-		install_path .. "/config_" .. os,
-		"-data",
-		workspace_dir,
-	},
-	capabilities = capabilities(),
-	root_dir = root_dir,
-	settings = {
-		java = {},
-	},
 
-	init_options = {
-		bundles = {
-			vim.fn.glob(
-				mason_path .. "packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
-				"\n"
-			),
-		},
+		-- 💀
+		"-jar",
+		-- "/home/energia/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.6.500.v20230717-2134.jar",
+		"/home/energia/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.6.500.v20230717-2134.jar",
+		-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
+		-- Must point to the                                                     Change this to
+		-- eclipse.jdt.ls installation                                           the actual version
+
+		-- 💀
+		"-configuration",
+		"/home/energia/.local/share/nvim/mason/packages/jdtls/config_linux",
+		-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
+		-- Must point to the                      Change to one of `linux`, `win` or `mac`
+		-- eclipse.jdt.ls installation            Depending on your system.
+
+		-- 💀
+		-- See `data directory configuration` section in the README
+		"-data",
+		vim.fn.expand("~/.cache/jdtls-workspace/") .. workspace_dir,
 	},
+	root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw", "pom.xml" }, { upward = true })[1]),
 }
 
-config["on_attach"] = function(client, bufnr)
-	local _, _ = pcall(vim.lsp.codelens.refresh)
-	require("jdtls.dap").setup_dap_main_class_configs()
-	jdtls.setup_dap({ hotcodereplace = "auto" })
-	require("user.lsp.handlers").on_attach(client, bufnr)
+local keymap = vim.keymap -- for conciseness
+local opts = { noremap = true, silent = true }
+-- Function to get the current buffer or class name (replace with your editor/IDE-specific logic)
+function get_current_file_name()
+	-- Replace this with the logic to get the current buffer or class name
+	return vim.fn.expand("%:t:r")
 end
 
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	pattern = { "*.java" },
-	callback = function()
-		local _, _ = pcall(vim.lsp.codelens.refresh)
-	end,
-})
+-- Function to run the Maven command in a new tmux window
+function run_maven_test()
+	local current_file_name = get_current_file_name()
+	local command = string.format(
+		"tmux new-window -n 'Maven Test Class' 'mvn -Dstyle.color=always -Dtest=%s test | less -R -G +G'",
+		current_file_name
+	)
 
-jdtls.start_or_attach(config)
+	-- Run the tmux command to create a new window and execute the Maven command
+	vim.fn.system(command)
+end
 
-vim.cmd(
-	[[command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)]]
-)
+function run_maven_test_method()
+	-- Get the current line
+	local current_line = vim.api.nvim_get_current_line()
+
+	-- Pattern to match the method name
+	local pattern = "void%s+(%w+)%s*%("
+
+	-- Use the string.match function with the pattern
+	local method_name = current_line:match(pattern)
+
+	-- Now method_name holds the name of the method
+	if method_name then
+		-- print("Method name: " .. method_name)
+		local current_file_name = get_current_file_name()
+		local command = string.format(
+			"tmux new-window -n 'Maven Test Method' 'mvn -Dstyle.color=always -Dtest=%s#%s test | less -R -G +G'",
+			current_file_name,
+			method_name
+		)
+
+		-- Run the tmux command to create a new window and execute the Maven command
+		vim.fn.system(command)
+	else
+		print("No method name found in the current line.")
+	end
+end
+
+config["on_attach"] = function(client, bufnr)
+	opts.buffer = bufnr
+
+	opts.desc = "Run Maven Test Single Method"
+	keymap.set("n", "<leader>tm", "<cmd>lua run_maven_test_method()<CR>", opts) -- show definition, references
+
+	opts.desc = "Run Maven Test Single Class"
+	keymap.set("n", "<leader>tr", "<cmd>lua run_maven_test()<CR>", opts) -- show definition, references
+
+	opts.desc = "Run LSP Format"
+	keymap.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{async=true}<CR>", opts) -- show definition, references
+	-- set keybinds
+	opts.desc = "Show LSP references"
+	keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+
+	opts.desc = "Go to declaration"
+	keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
+
+	opts.desc = "Show LSP definitions"
+	keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
+
+	opts.desc = "Show LSP implementations"
+	keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
+
+	opts.desc = "Show LSP type definitions"
+	keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
+
+	opts.desc = "See available code actions"
+	keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
+
+	opts.desc = "Smart rename"
+	keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
+
+	opts.desc = "Show buffer diagnostics"
+	keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+
+	opts.desc = "Show line diagnostics"
+	keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+
+	opts.desc = "Go to previous diagnostic"
+	keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+
+	opts.desc = "Go to next diagnostic"
+	keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
+
+	opts.desc = "Show documentation for what is under cursor"
+	keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+
+	opts.desc = "Restart LSP"
+	keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+end
+
+require("jdtls").start_or_attach(config)

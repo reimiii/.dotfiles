@@ -1,1 +1,2 @@
-require("energia")
+require("energia.core")
+require("energia.lazy")

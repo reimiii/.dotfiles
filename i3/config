@@ -118,7 +118,7 @@ bindsym Ctrl+Shift+Print exec --no-startup-id maim --format=png --select | xclip
 ######################################
 
 # start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec konsole
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -147,9 +147,6 @@ bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to update i3)
 bindsym $mod+Shift+r restart
-
-# keybinding in fancy rofi (automated):
-bindsym F1 exec ~/.config/i3/scripts/keyhint-2
 
 # Backlight control
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh brightness_up
@@ -244,7 +241,7 @@ set $ws9 "9"
 set $ws10 "10"
 
 # bind program to workspace and focus to them on startup:
-assign [class="Xfce4-terminal"] $ws1
+assign [class="konsole"] $ws1
 assign [class="firefox"] $ws2
 assign [class="jetbrains-toolbox"] $ws3
 assign [class="jetbrains-idea"] $ws3
@@ -253,7 +250,7 @@ assign [class="Thunar"] $ws7
 assign [class="mpv"] $ws8
 
 # automatic set focus new window if it opens on another workspace than the current:
-for_window [class=Xfce4-terminal] focus
+for_window [class=konsole] focus
 for_window [class=firefox] focus
 for_window [class=jetbrains-toolbox] focus
 for_window [class=jetbrains-idea] focus
@@ -334,7 +331,7 @@ for_window [class="urxvt"] border pixel 1
 #for_window [class=".*"] resize set 640 480 #to change size of all floating windows 
 
 # set position of floating window
-#for_window [class=".*"] move position center
+for_window [class=".*"] move position center
 
 ######################################
 # color settings for bar and windows #

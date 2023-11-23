@@ -15,7 +15,7 @@ return {
 		)
 		keymap.set(
 			"n",
-			"<C-e>",
+			"<A-e>",
 			"<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>",
 			{ desc = "Show harpoon marks" }
 		)

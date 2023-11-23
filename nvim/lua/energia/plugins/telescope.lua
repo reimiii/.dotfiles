@@ -10,10 +10,23 @@ return {
 	config = function()
 		local telescope = require("telescope")
 		local actions = require("telescope.actions")
+		local builtin = require("telescope.builtin")
 
 		telescope.setup({
 			defaults = {
-				path_display = { "truncate " },
+				vimgrep_arguments = {
+					"rg",
+					"-L",
+					"--color=never",
+					"--no-heading",
+					"--with-filename",
+					"--line-number",
+					"--column",
+					"--smart-case",
+				},
+				path_display = { "smart" },
+				color_devicons = true,
+				file_ignore_patterns = { "node_modules", "target" },
 				mappings = {
 					i = {
 						["<C-k>"] = actions.move_selection_previous, -- move to prev result
@@ -21,18 +34,40 @@ return {
 						["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
 					},
 				},
+				borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+				layout_strategy = "horizontal",
+				layout_config = {
+					horizontal = {
+						prompt_position = "bottom",
+						preview_width = 0.55,
+						results_width = 0.55,
+					},
+					vertical = {
+						mirror = false,
+					},
+					width = 0.80,
+					height = 0.80,
+					preview_cutoff = 20,
+				},
 			},
 		})
 
 		telescope.load_extension("fzf")
 		telescope.load_extension("ui-select")
+		telescope.load_extension("harpoon")
 
 		-- set keymaps
-		local keymap = vim.keymap -- for conciseness
-
-		keymap.set("n", "<leader>f", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
-		keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
-		keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
-		keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
+		local wk = require("which-key")
+		wk.register({
+			["<A-f>"] = { builtin.find_files, "Find File", nowait = true },
+			["<A-g>"] = { builtin.git_files, "Find Git File", nowait = true },
+			["<A-s>"] = {
+				function()
+					builtin.grep_string({ search = vim.fn.input("Grep > ") })
+				end,
+				"Find String",
+				nowait = true,
+			},
+		})
 	end,
 }

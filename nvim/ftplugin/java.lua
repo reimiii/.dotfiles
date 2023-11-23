@@ -41,7 +41,7 @@ local config = {
 	root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw", "pom.xml" }, { upward = true })[1]),
 }
 
-require("energia.core.maven")
+local maven = require("energia.core.maven")
 local lsp_keymaps = require("energia.core.lsp-keymaps")
 
 -- local keymap = vim.keymap -- for conciseness
@@ -50,6 +50,7 @@ local lsp_keymaps = require("energia.core.lsp-keymaps")
 config["on_attach"] = function(client, bufnr)
 	-- opts.buffer = bufnr
 	lsp_keymaps(client, bufnr)
+	maven(client, bufnr)
 
 	-- opts.desc = "Run Maven Test Single Method"
 	-- keymap.set("n", "<leader>tm", "<cmd>lua run_maven_test_method()<CR>", opts) -- show definition, references

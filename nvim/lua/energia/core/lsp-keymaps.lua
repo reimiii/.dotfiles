@@ -2,6 +2,7 @@ local wk = require("which-key")
 
 local function on_attach(client, bufnr)
 	local opts = { noremap = true, silent = true, buffer = bufnr }
+
 	local mappings = {
 		["<leader>l"] = {
 			name = "LSP",

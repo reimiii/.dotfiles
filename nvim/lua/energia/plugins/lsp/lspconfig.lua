@@ -31,6 +31,24 @@ return {
 			end,
 		})
 
+		lspconfig["docker_compose_language_service"].setup({
+			cmd = { "docker-compose-langserver", "--stdio" },
+			filetypes = { "yaml.docker-compose" },
+			root_dir = lspconfig.util.root_pattern("docker-compose.yaml"),
+			single_file_support = true,
+			capabilities = capabilities,
+			on_attach = function(client, bufnr)
+				lsp_keymaps(client, bufnr)
+			end,
+		})
+
+		lspconfig["yamlls"].setup({
+			capabilities = capabilities,
+			on_attach = function(client, bufnr)
+				lsp_keymaps(client, bufnr)
+			end,
+		})
+
 		-- configure lua server (with special settings)
 		lspconfig["lua_ls"].setup({
 			capabilities = capabilities,

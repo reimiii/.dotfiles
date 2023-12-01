@@ -7,17 +7,6 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
-export QT_QPA_PLATFORMTHEME=qt5ct
-
-
-# bindkey -s ^f "tmux-sessionizer\n"
-# set -o ignoreeof
-
-# test for undo
-# oke
-# some cange
-# undo
-# Path to your oh-my-zsh installation.
 ZSH=/usr/share/oh-my-zsh/
 
 # Set name of the theme to load --- if set to "random", it will
@@ -100,7 +89,9 @@ export JAVA_HOME=$HOME/Dev/jdk/jdk-21.0.1+12
 # Maven
 export MAVEN_HOME=$HOME/Dev/apache/apache-maven-3.8.8
 
-export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$JETBRAIN/scripts:$PATH
+export GRADLE=$HOME/Dev/gradle-8.4
+
+export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$JETBRAIN/scripts:$GRADLE/bin:$PATH
 
 # export MANPATH="/usr/local/man:$MANPATH"
 

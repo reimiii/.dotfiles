@@ -1,0 +1,6 @@
+jetbrains-toolbox 2.1.1.18388-1
+nerdfix 0.4.0-1
+oh-my-zsh-git r7020.f93976875-1
+oh-my-zsh-plugin-autosuggestions 0.7.0-1
+oh-my-zsh-plugin-syntax-highlighting 0.7.1-1
+z-library-bin 1.0.2-1

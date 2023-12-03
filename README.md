@@ -1,9 +1,9 @@
+### new thing
 `stow folder folder folder..`
 
 
 
-
-## depercated
+### depercated
 need this first https://wiki.archlinux.org/title/PC_speaker#Disabling_the_PC_speaker
 need install `kitty`, `playerctl`, `pactl`, `brillo` in aur and add chmod +s, `feh`, `redshift`, `arandr` for monitor, `pavucontrol` for audio.
 

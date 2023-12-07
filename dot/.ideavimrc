@@ -21,9 +21,9 @@ set so=8
 set incsearch
 set nu
 set relativenumber
-set showmode
 set undodir=~/.nvim/undodir
 set undofile
+set clipboard+=unnamed
 
 """ Idea specific settings ------------------
 set ideajoin
@@ -77,7 +77,7 @@ nnoremap ; :
 vnoremap ; :
 nnoremap <leader>d "_d
 
-nnoremap <C-a> ggVG
+nnoremap <A-a> ggVG
 nnoremap J mzJ`z
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz

@@ -1,28 +1,49 @@
 #!/usr/bin/env bash
-ok=$(tmux list-sessions 2>/dev/null)
 
-if [ -n "$ok" ]; then
-	echo "There are active tmux sessions."
+selected=`cat ./tmux-cht-languages ./tmux-cht-command | fzf`
 
-	# Add the code you want to execute when there are active sessions
+if [[ -z $selected ]]; then
+    exit 0
+fi
 
-	echo "some if"
-	exit
+read -p "Enter Query: " query
 
+if grep -qs "$selected" ./tmux-cht-languages; then
+    query=`echo $query | tr ' ' '+'`
+    if [[ -z $query ]]; then
+        oke=`curl -s -S cht.sh/$selected/rosetta/:list | fzf`
+        tmux neww bash -c "curl -s -S cht.sh/$selected/rosetta/$oke | less"
+        echo "$oke - rosetta...."
+    else
+        tmux neww bash -c "curl -s -S cht.sh/$selected/$query | less"
+    fi
+#    tmux neww bash -c "echo \"curl cht.sh/$selected/$query/\" & curl cht.sh/$selected/$query & while [ : ]; do sleep 1; done"
 else
-	echo "There are no active tmux sessions."
-
-	echo "some else"
-	# Add the code you want to execute when there are no active sessions
-
-	exit
+    tmux neww bash -c "curl -s -S cht.sh/$selected~$query | less"
 fi
-my_string="$TMUX"
-
-if [[ -z "$my_string" ]]; then
-	echo "The string is empty"
-fi
-
-if [[ -n "$my_string" ]]; then
-	echo "The string is not empty"
-fi
+# ok=$(tmux list-sessions 2>/dev/null)
+# if [ -n "$ok" ]; then
+# 	echo "There are active tmux sessions."
+#
+# 	# Add the code you want to execute when there are active sessions
+#
+# 	echo "some if"
+# 	exit
+#
+# else
+# 	echo "There are no active tmux sessions."
+#
+# 	echo "some else"
+# 	# Add the code you want to execute when there are no active sessions
+#
+# 	exit
+# fi
+# my_string="$TMUX"
+#
+# if [[ -z "$my_string" ]]; then
+# 	echo "The string is empty"
+# fi
+#
+# if [[ -n "$my_string" ]]; then
+# 	echo "The string is not empty"
+# fi

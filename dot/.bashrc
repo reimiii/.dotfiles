@@ -164,4 +164,6 @@ fi
 
 bind '"\C-f":"tmux-sessionizer\n"'
 
+bind '"\C-g":"cht.sh\n"'
+
 export GPG_TTY=$(tty)

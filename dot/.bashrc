@@ -107,6 +107,8 @@ plugins=(
   bashmarks
 )
 
+set -o vi
+
 # Which plugins would you like to conditionally load? (plugins can be found in ~/.oh-my-bash/plugins/*)
 # Custom plugins may be added to ~/.oh-my-bash/custom/plugins/
 # Example format:
@@ -142,8 +144,9 @@ export SSH_KEY_PATH="~/.ssh/id_ed25519"
 # neovim
 export NEOVIM=$HOME/bin/nvim-linux64
 export NODEJS=$HOME/bin/node-v20.10.0-linux-x64 
+export GOLANG=/usr/local/go
 
-export PATH=$NEOVIM/bin:$NODEJS/bin:$PATH
+export PATH=$NEOVIM/bin:$NODEJS/bin:$GOLANG/bin:$PATH
 # Set personal aliases, overriding those provided by oh-my-bash libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-bash
 # users are encouraged to define aliases within the OSH_CUSTOM folder.
@@ -163,8 +166,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
-bind '"\C-f":"tmux-sessionizer\n"'
+
+
 
 bind '"\C-g":"cht.sh\n"'
+bind '"\C-f":"tmux-sessionizer\n"'
 
 export GPG_TTY=$(tty)

@@ -52,9 +52,9 @@ return {
 			},
 		})
 
-		telescope.load_extension("fzf")
+		-- telescope.load_extension("fzf")
 		telescope.load_extension("ui-select")
-		telescope.load_extension("harpoon")
+		--		telescope.load_extension("harpoon")
 
 		-- set keymaps
 		local wk = require("which-key")

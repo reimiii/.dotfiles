@@ -165,7 +165,7 @@ esac
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
-
+alias svim='sudo -E -s nvim -c "set noundofile"' 
 # ssh
 export SSH_KEY_PATH="~/.ssh/id_ed25519"
 

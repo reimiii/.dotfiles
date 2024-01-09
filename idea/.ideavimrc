@@ -21,10 +21,8 @@ set so=8
 set incsearch
 set nu
 set relativenumber
-set undodir=~/.nvim/undodir
 set undofile
 set clipboard+=unnamed
-
 """ Idea specific settings ------------------
 set ideajoin
 "set ideastatusicon=gray
@@ -64,14 +62,6 @@ map <C-j> <Action>(MoveLineDown)
 "inoremap <C-c> <Esc>
 
 "xnoremap <leader>pp "_dP
-
-nnoremap <leader>y "+y
-vnoremap <leader>y "+y
-nnoremap <leader>Y "+Y
-
-nnoremap <leader>p "+p
-vnoremap <leader>p "+p
-nnoremap <leader>P "+P
 
 nnoremap ; :
 vnoremap ; :

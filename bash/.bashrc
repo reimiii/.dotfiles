@@ -116,6 +116,11 @@ completions=(
   composer
   ssh
   tmux
+  docker-compose
+  defaults
+  gradle
+  maven
+  system
 )
 
 # Which aliases would you like to load? (aliases can be found in ~/.oh-my-bash/aliases/*)
@@ -133,6 +138,8 @@ aliases=(
 plugins=(
   git
   bashmarks
+  ansible
+  sudo
 )
 
 set -o vi
@@ -166,6 +173,7 @@ esac
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 alias svim='sudo -E -s nvim -c "set noundofile"' 
+alias dc="docker compose"
 # ssh
 export SSH_KEY_PATH="~/.ssh/id_ed25519"
 

@@ -22,7 +22,7 @@ opt.backup = false
 opt.undodir = os.getenv("HOME") .. "/.nvim/undodir"
 opt.undofile = true
 
-opt.hlsearch = false
+opt.hlsearch = true
 opt.incsearch = true
 
 opt.termguicolors = true

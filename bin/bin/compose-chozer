@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+comp=$(find ~/compose-dev/ -mindepth 2 -maxdepth 2 -type f ! -path '*/.git/*' | fzf)
+
+if [ -z "$comp" ]; then
+	exit 1	
+fi
+
+comp_name=$(basename "$comp" | tr . _)
+
+if ! [ -z "$TMUX" ]; then
+	echo "$comp"
+	echo "$comp_name"
+else
+	echo "this operation must be done in tmux session"
+fi

@@ -32,7 +32,7 @@ set idearefactormode=keep
 map <leader>f <Plug>(easymotion-s)
 map <leader>e <Plug>(easymotion-f)
 
-map <leader>d <Action>(Debug)
+"map <leader>d <Action>(Debug)
 "map <leader>r <Action>(RenameElement)
 map <leader>c <Action>(Stop)
 map <leader>z <Action>(ToggleDistractionFreeMode)
@@ -59,13 +59,12 @@ map <leader>aa <Action>(GotoAction)
 map <C-k> <Action>(MoveLineUp)
 map <C-j> <Action>(MoveLineDown)
 
-"inoremap <C-c> <Esc>
+"inoremap <CC-c-c> <Esc>
 
-"xnoremap <leader>pp "_dP
-
-nnoremap ; :
-vnoremap ; :
+"usize ; :
+"vnoremap ; :
 nnoremap <leader>d "_d
+vnoremap <leader>d "_d
 
 nnoremap <A-a> ggVG
 nnoremap J mzJ`z
@@ -78,8 +77,8 @@ nnoremap N Nzzzv
 nnoremap <C-s> :w<CR>
 nnoremap <C-t> :action ActivateTerminalToolWindow<CR>
 nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
-nnoremap q :action CloseContent<CR>
-nnoremap <C-x> :action CloseAllEditorsButActive<CR>
+nnoremap <S-q> :action CloseContent<CR>
+nnoremap <C-S-x> :action CloseAllEditorsButActive<CR>
 nnoremap <leader>x :action HideActiveWindow<CR>
 nnoremap <A-x> :action CloseActiveTab<CR>
 

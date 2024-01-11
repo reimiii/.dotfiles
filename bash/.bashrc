@@ -186,5 +186,6 @@ export SSH_KEY_PATH="~/.ssh/id_ed25519"
 
 bind '"\C-g":"cht.sh\n"'
 bind '"\C-f":"tmux-sessionizer\n"'
+bind '"\C-p":"compose-chozer\n"'
 
 export GPG_TTY=$(tty)

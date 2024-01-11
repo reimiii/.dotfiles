@@ -10,7 +10,7 @@ keymap.set("n", "J", "mzJ`z")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
 
-keymap.set("n", "<C-a>", "ggVG") -- select all
+keymap.set("n", "<A-a>", "ggVG") -- select all
 keymap.set("n", "<C-s>", ":w<CR>") -- quick save
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>") -- tmux fzf
 keymap.set("n", "<C-d>", "<C-d>zz")
@@ -44,6 +44,6 @@ keymap.set("x", "<leader>p", [["_dP]], { desc = "Paster deleted registery" })
 keymap.set("n", "<leader>Y", [["+Y]], { desc = "Copy line" })
 keymap.set({ "v", "i" }, "<C-c>", "<Esc>")
 keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete to registery" })
-keymap.set({ "n", "v" }, ";", ":")
+-- keymap.set({ "n", "v" }, ";", ":")
 keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Copy With Visual Mode" })
 -- end keymap

@@ -6,11 +6,8 @@ if [ -z "$comp" ]; then
 	exit 1	
 fi
 
-comp_name=$(basename "$comp" | tr . _)
-
 if ! [ -z "$TMUX" ]; then
-	echo "$comp"
-	echo "$comp_name"
+    tmux new-window docker compose -f "$comp" up
 else
 	echo "this operation must be done in tmux session"
 fi

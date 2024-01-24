@@ -31,6 +31,14 @@ return {
 			end,
 		})
 
+		lspconfig["java_language_server"].setup({
+			cmd = { "~/.local/share/nvim/mason/packages/java-language-server/dist/lang_server_linux.sh" },
+			capabilities = capabilities,
+			on_attach = function(client, bufnr)
+				lsp_keymaps(client, bufnr)
+			end,
+		})
+
 		lspconfig["docker_compose_language_service"].setup({
 			cmd = { "docker-compose-langserver", "--stdio" },
 			filetypes = { "yaml.docker-compose" },

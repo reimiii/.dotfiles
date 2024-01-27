@@ -49,7 +49,7 @@ map <leader>o <Action>(FileStructurePopup)
 map <A-f> <Action>(GotoFile)
 map <TAB> <Action>(NextTab)
 map <S-TAB> <Action>(PreviousTab)
-map ~ <Action>(ReopenClosedTab)
+map ` <Action>(ReopenClosedTab)
 map <C-c> <Action>(EditorEscape)
 
 map <leader>lf <Action>(ReformatCode)

@@ -189,3 +189,14 @@ bind '"\C-f":"tmux-sessionizer\n"'
 bind '"\C-p":"compose-chozer\n"'
 
 export GPG_TTY=$(tty)
+function pacman-optional-deps() {
+ if [ $# -eq 0 ]; then 
+    echo "No arguments specified. You must specify a package" 
+    return 1 
+  fi 
+  deps=$(pacman -Si $1 | sed -n '/^Opt/,/^Conf/p' | sed '$d' | sed 's/^Opt[^:]*://g' | sed 's/^\s*//g' | sed 's/:.*$//g' | tr '\n' ' ')
+  echo "Will install:"
+  echo $deps
+  sudo pacman -S --asdeps --needed $deps 
+}
+

@@ -70,7 +70,7 @@ mode "$mode_redshift" {
 # install maim xclip copyq
 
 ##  Screenshots in files
-bindsym Print exec --no-startup-id maim --format=png "/home/$USER/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-all.png" 
+bindsym Print exec --no-startup-id maim --format=png "~/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-all.png" 
 bindsym $mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) "/home/$USER/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-current.png"
 bindsym Shift+Print exec --no-startup-id maim --format=png --select "/home/$USER/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-selected.png"
 

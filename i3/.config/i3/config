@@ -208,20 +208,20 @@ set $ws9 "9"
 set $ws10 "10"
 
 # bind program to workspace and focus to them on startup:
+assign [class="kitty"] $ws1
 assign [class="firefox"] $ws2
 assign [class="jetbrains-toolbox"] $ws3
 assign [class="jetbrains-idea"] $ws3
 assign [class="discord"] $ws6
-assign [class="nemo"] $ws7
-assign [class="mpv"] $ws8
+assign [class="Nemo"] $ws7
 
 # automatic set focus new window if it opens on another workspace than the current:
-for_window [class=konsole] focus
+for_window [class=kitty] focus
 for_window [class=firefox] focus
 for_window [class=jetbrains-toolbox] focus
 for_window [class=jetbrains-idea] focus
 for_window [class=discord] focus
-for_window [class=Thunar] focus
+for_window [class=nemo] focus
 for_window [class=mpv] focus
 
 #############################################

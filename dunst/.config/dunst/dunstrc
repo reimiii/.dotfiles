@@ -27,7 +27,7 @@
     width = 300
 
     # The maximum height of a single notification, excluding the frame.
-    height = 300
+    height = 400
 
     # Position the notification in the top right corner
     origin = top-right
@@ -123,7 +123,7 @@
 
     ### Text ###
 
-    font = JetBrainsMono Nerd Font 12
+    font = Hack Nerd Font 12
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -171,7 +171,7 @@
 
     # Vertical alignment of message text and icon.
     # Possible values are "top", "center" and "bottom".
-    vertical_alignment = center
+    vertical_alignment = top
 
     # Show age of message if message is older than show_age_threshold
     # seconds.
@@ -180,7 +180,7 @@
 
     # Specify where to make an ellipsis in long lines.
     # Possible values are "start", "middle" and "end".
-    ellipsize = middle
+    ellipsize = left
 
     # Ignore newlines '\n' in notifications.
     ignore_newline = no
@@ -313,8 +313,8 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#282828"
-    foreground = "#ebdbb2"
+    background = "#282828"  # Gruvbox background color
+    foreground = "#ebdbb2"  # Gruvbox foreground color
     timeout = 10
     # Icon for notifications with low urgency, uncomment to enable
     #default_icon = /path/to/icon

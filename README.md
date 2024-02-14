@@ -1,7 +1,7 @@
 ### new thing
 `stow folder folder folder..`
 
-
+gsettings set org.cinnamon.desktop.default-applications.terminal exec gnome-shell
 
 ### depercated
 need this first https://wiki.archlinux.org/title/PC_speaker#Disabling_the_PC_speaker

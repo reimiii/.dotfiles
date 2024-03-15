@@ -101,6 +101,8 @@ export SSH_KEY_PATH="~/.ssh/id_ed25519"
 # export GOLANG=/usr/local/go
 
 # export PATH=$NEOVIM/bin:$NODEJS/bin:$GOLANG/bin:$PATH
+export CHROME_EXECUTABLE=firefox
+export PATH=$PATH:$HOME/flutter/bin
 
 bind '"\C-g":"cht.sh\n"'
 bind '"\C-f":"tmux-sessionizer\n"'

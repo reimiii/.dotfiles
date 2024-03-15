@@ -233,7 +233,7 @@ exec --no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
 exec --no-startup-id dex --autostart --environment i3
 
 # set wallpaper
-exec_always --no-startup-id feh --bg-fill --randomize $HOME/Pictures/wallpaper/gruvbox/anime/*
+exec_always --no-startup-id feh --bg-fill $HOME/Pictures/wallpaper/gruvbox/anime/my-neighbor-totoro-sunflowers.png
 #exec --no-startup-id sleep 1 && feh --bg-fill ~/Pictures/archlinux.png
 
 # set powersavings for display:

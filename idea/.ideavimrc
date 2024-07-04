@@ -60,7 +60,7 @@ map <C-k> <Action>(MoveLineUp)
 map <C-j> <Action>(MoveLineDown)
 
 "inoremap <CC-c-c> <Esc>
-
+inoremap <A-c> <Esc>
 "usize ; :
 "vnoremap ; :
 nnoremap <leader>d "_d

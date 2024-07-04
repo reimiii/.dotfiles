@@ -1,13 +1,21 @@
 #!/usr/bin/env bash
 
-comp=$(find ~/compose-dev/ -mindepth 2 -maxdepth 2 -type f ! -path '*/.git/*' | fzf)
+comp=$(find ~/compose-dev/ -mindepth 2 -maxdepth 2 -type f ! -path '*/.git/*')
 
-if [ -z "$comp" ]; then
-	exit 1	
+selected=`cat ~/bin/mydb | fzf`
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+yaml_file=$(echo "$comp" | grep -i "$selected")
+if [[ -z $yaml_file ]]; then
+    echo "No matching compose file found for $selected"
+    exit 1
 fi
 
 if ! [ -z "$TMUX" ]; then
-    tmux new-window docker compose -f "$comp" up
+    tmux new-window "echo \"Running docker-compose with $yaml_file\" && docker compose -f \"$yaml_file\" up"
 else
 	echo "this operation must be done in tmux session"
+    exit 1
 fi

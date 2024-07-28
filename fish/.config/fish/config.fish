@@ -1,4 +1,5 @@
 set PATH ~/bin $PATH
+fish_add_path ~/Dev/jdk/jdk-21.0.4/bin/
 
 bind \cf tmux-sessionizer
 bind \cp compose-chozer
@@ -7,15 +8,13 @@ bind \cg cht.sh
 #bind '"\C-g":"cht.sh\n"'
 #bind '"\C-f":"tmux-sessionizer\n"'
 #bind '"\C-p":"compose-chozer\n"'
+# ini baru
 
 function svim --wraps nvim --description 'sudo in nvim'
     sudo nvim -c "set noundofile" $argv
 end
 
 alias dc="docker compose"
-alias add-to-github "git init && git add . && git commit -m 'Initial commit' && git branch -M main && git remote add origin '$argv[1]' && git push -u origin main"
-alias dynamic-push "git add . && git commit -m '$argv[1]' && git push"
-
 
 # ssh
 set -gx  SSH_KEY_PATH "~/.ssh/id_ed25519"

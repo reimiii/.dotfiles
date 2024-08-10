@@ -4,6 +4,7 @@ fish_add_path ~/Dev/jdk/jdk-21.0.4/bin/
 bind \cf tmux-sessionizer
 bind \cp compose-chozer
 bind \cg cht.sh
+bind \co copas
 
 #bind '"\C-g":"cht.sh\n"'
 #bind '"\C-f":"tmux-sessionizer\n"'

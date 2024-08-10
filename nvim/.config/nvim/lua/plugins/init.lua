@@ -31,8 +31,19 @@ return {
   	opts = {
   		ensure_installed = {
   			"vim", "lua", "vimdoc",
-       "html", "css", "bash"
+       "html", "css", "bash", "java"
   		},
   	},
+  },
+
+  {
+    "nvim-telescope/telescope.nvim",
+    tag = "0.1.8",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      "nvim-tree/nvim-web-devicons",
+      "nvim-telescope/telescope-ui-select.nvim",
+    },
   },
 }

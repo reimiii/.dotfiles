@@ -6,6 +6,8 @@ bind \cp compose-chozer
 bind \cg cht.sh
 bind \co copas
 
+set -gx NVM_DIR $HOME/.nvm
+
 #bind '"\C-g":"cht.sh\n"'
 #bind '"\C-f":"tmux-sessionizer\n"'
 #bind '"\C-p":"compose-chozer\n"'
@@ -34,4 +36,3 @@ function opdeps --wraps ~/bin/pacman-optional-deps.sh --description 'install pac
     # Call the external script (replace with actual script path)
     ~/bin/pacman-optional-deps.sh $argv
 end
-

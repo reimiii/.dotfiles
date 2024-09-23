@@ -7,13 +7,13 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
-ZSH=/usr/share/oh-my-zsh/
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="af-magic"
+ZSH_THEME="ultima"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -84,14 +84,14 @@ export JETBRAIN=$HOME/.local/share/JetBrains/Toolbox
 
 # JDK
 # export JAVA_HOME=$HOME/Dev/jdk/jdk-17.0.8.1+1
-export JAVA_HOME=$HOME/Dev/jdk/jdk-21.0.1+12
+export JAVA_HOME=$HOME/Dev/jdk/jdk-21.0.4
 
 # Maven
-export MAVEN_HOME=$HOME/Dev/apache/apache-maven-3.8.8
+# export MAVEN_HOME=$HOME/Dev/apache/apache-maven-3.8.8
 
-export GRADLE=$HOME/Dev/gradle-8.4
+# export GRADLE=$HOME/Dev/gradle-8.4
 
-export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$JETBRAIN/scripts:$GRADLE/bin:$PATH
+export PATH=$JAVA_HOME/bin:$JETBRAIN/scripts:$PATH
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -118,19 +118,25 @@ export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$JETBRAIN/scripts:$GRADLE/bin:$PATH
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim=nvim
 alias svim='sudo -E -s nvim -c "set noundofile"'
+alias opdeps=pacman-optional-deps.sh
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
 fi
 
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 source $ZSH/oh-my-zsh.sh
 
 export GPG_TTY=$(tty)
 bindkey -s '^f' 'tmux-sessionizer\n'
-
-function get_chapters_times() {
-  paste <(yt-dlp --dump-json $1 | jq --raw-output ".chapters[].start_time" | awk '{printf("%d:%02d:%02d\n",($1/60/60%24),($1/60%60),($1%60))}') <(yt-dlp --dump-json $1 | jq --raw-output ".chapters[].title")
-}
+bindkey -s '^p' 'compose-chozer\n'
+bindkey -s '^g' 'cht.sh\n'
+bindkey -s '^o' 'copas\n'
 
 # test berubah ga??
+
+source <(fzf --zsh)

@@ -13,7 +13,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="ultima"
+ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -30,11 +30,11 @@ CASE_SENSITIVE="true"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+# zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-zstyle ':omz:update' frequency 1
+zstyle ':omz:update' frequency 10
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -75,23 +75,23 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting archlinux zsh-autosuggestions)
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
 
 
 # User configuration
 # ToolBox..
-export JETBRAIN=$HOME/.local/share/JetBrains/Toolbox
+# export JETBRAIN=$HOME/.local/share/JetBrains/Toolbox
 
 # JDK
 # export JAVA_HOME=$HOME/Dev/jdk/jdk-17.0.8.1+1
-export JAVA_HOME=$HOME/Dev/jdk/jdk-21.0.4
+# export JAVA_HOME=$HOME/Dev/jdk/jdk-21.0.4
 
 # Maven
 # export MAVEN_HOME=$HOME/Dev/apache/apache-maven-3.8.8
 
 # export GRADLE=$HOME/Dev/gradle-8.4
 
-export PATH=$JAVA_HOME/bin:$JETBRAIN/scripts:$PATH
+# export PATH=$JAVA_HOME/bin:$JETBRAIN/scripts:$PATH
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -125,9 +125,6 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
 fi
 
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 source $ZSH/oh-my-zsh.sh
 
@@ -137,6 +134,6 @@ bindkey -s '^p' 'compose-chozer\n'
 bindkey -s '^g' 'cht.sh\n'
 bindkey -s '^o' 'copas\n'
 
-# test berubah ga??
-
-source <(fzf --zsh)
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

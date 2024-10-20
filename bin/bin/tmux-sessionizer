@@ -3,23 +3,50 @@
 session=$(find /home ~ ~/Videos/CS/ ~/Videos/CS/LL/ ~/Videos/CS/vd/ ~/Videos/CS/PZN/ ~/.config ~/Videos ~/Downloads ~/Dev/personal/ ~/Dev -mindepth 1 -maxdepth 1 -type d,l | fzf)
 
 if [ -z "$session" ]; then
-	exit 1	
+    exit 1
 fi
 
-session_name=$(basename "$session" | tr . _)
+# Mengambil basename dan mengganti . - dan spasi dengan _
+session_base=$(basename "$session" | sed 's/[.\ -]/_/g')
+session_hash=$(echo -n "$session" | md5sum | cut -c1-6)  # Mengambil hash dari path untuk uniqueness
+session_name="${session_base}_${session_hash}"  # Pemisah menggunakan tanda titik dua (:)
 
 if [ -z "$TMUX" ]; then
-	if ! tmux has-session -t "$session_name" 2> /dev/null; then
-		tmux new-session -s "$session_name" -c "$session"
-		exit
-	else
-		tmux a -t "$session_name"
-		exit
-	fi
+    if ! tmux has-session -t "$session_name" 2> /dev/null; then
+        tmux new-session -s "$session_name" -c "$session"
+        exit
+    else
+        tmux a -t "$session_name"
+        exit
+    fi
 fi
 
 if ! tmux has-session -t "$session_name" 2> /dev/null && [ -n "$TMUX" ]; then
-	tmux new-session -s "$session_name" -c "$session" -d
+    tmux new-session -s "$session_name" -c "$session" -d
 fi
 
 tmux switch-client -t "$session_name"
+
+# session=$(find /home ~ ~/Videos/CS/ ~/Videos/CS/LL/ ~/Videos/CS/vd/ ~/Videos/CS/PZN/ ~/.config ~/Videos ~/Downloads ~/Dev/personal/ ~/Dev -mindepth 1 -maxdepth 1 -type d,l | fzf)
+#
+# if [ -z "$session" ]; then
+# 	exit 1	
+# fi
+#
+# session_name=$(basename "$session" | tr . _)
+#
+# if [ -z "$TMUX" ]; then
+# 	if ! tmux has-session -t "$session_name" 2> /dev/null; then
+# 		tmux new-session -s "$session_name" -c "$session"
+# 		exit
+# 	else
+# 		tmux a -t "$session_name"
+# 		exit
+# 	fi
+# fi
+#
+# if ! tmux has-session -t "$session_name" 2> /dev/null && [ -n "$TMUX" ]; then
+# 	tmux new-session -s "$session_name" -c "$session" -d
+# fi
+#
+# tmux switch-client -t "$session_name"

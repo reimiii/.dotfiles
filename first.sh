@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-mkdir -p ~/Dev/personal ~/Videos/CS/LL ~/Videos/CS/vd ~/Videos/CS/PZN
+mkdir -p ~/Dev/personal ~/Dev/work ~/Videos/CS/LL ~/Videos/CS/vd ~/Videos/CS/PZN
 
 sudo pacman -S $(cat pacman.txt)
 

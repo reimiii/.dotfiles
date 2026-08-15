@@ -36,8 +36,10 @@ ln -s ~/.dotfiles/tmux-conf/.tmux.conf ~/.tmux.conf
 ## setup.sh (secrets)
 
 - Clones the `vault` repo to `~/vault` over HTTPS (asks before removing an existing copy)
-- Prompts for the **vault password** to decrypt `.ssh/*` + `gpg/key.asc`
-- Installs `~/.gitconfig`, `~/.ssh`, imports the GPG key, loads the SSH agent
+- Prompts for the **vault password** to decrypt `.ssh/id_ed25519` + `gpg/key.asc` to a temp dir
+  (the vault working tree stays encrypted at all times)
+- Installs `~/.gitconfig`, `~/.ssh` (`chmod 600` on the key), imports the GPG key,
+  loads the SSH agent, installs the vault pre-commit guard
 - Switches the `vault` and `.dotfiles` remotes to SSH
 
 ## Dependencies

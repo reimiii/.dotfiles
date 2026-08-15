@@ -17,16 +17,22 @@ fi
 log "Cloning vault"
 git clone "$VAULT_HTTPS" "$VAULT_DIR"
 
-log "Decrypting secrets (ssh + gpg)"
-cd "$VAULT_DIR"
-ansible-vault decrypt .ssh/* gpg/key.asc
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+log "Decrypting secrets to temp dir"
+ansible-vault decrypt --output "$tmp/id_ed25519" "$VAULT_DIR/.ssh/id_ed25519"
+ansible-vault decrypt --output "$tmp/key.asc"    "$VAULT_DIR/gpg/key.asc"
 
 log "Installing .gitconfig"
 cp "$VAULT_DIR/.gitconfig" "$HOME/"
 
 log "Installing .ssh"
 rm -rf "$HOME/.ssh"
-cp -r "$VAULT_DIR/.ssh" "$HOME/"
+mkdir -p "$HOME/.ssh"
+cp -r "$VAULT_DIR/.ssh/." "$HOME/.ssh/"
+cp "$tmp/id_ed25519" "$HOME/.ssh/id_ed25519"
+chmod 600 "$HOME/.ssh/id_ed25519"
 
 log "Starting ssh-agent and loading key"
 if ! ssh-add -l >/dev/null 2>&1; then
@@ -35,12 +41,13 @@ fi
 ssh-add "$HOME/.ssh/id_ed25519"
 
 log "Importing gpg key"
-gpg --import "$VAULT_DIR/gpg/key.asc"
+gpg --import "$tmp/key.asc"
 
-log "Switching vault remote to ssh"
+log "Installing vault pre-commit guard"
+"$VAULT_DIR/scripts/install-hooks.sh"
+
+log "Switching remotes to ssh"
 git -C "$VAULT_DIR" remote set-url origin "$VAULT_SSH"
-
-log "Switching .dotfiles remote to ssh"
 git -C "$HOME/.dotfiles" remote set-url origin "$DOTFILES_SSH"
 
 echo "Done."

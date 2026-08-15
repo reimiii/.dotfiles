@@ -13,7 +13,7 @@ Personal dotfiles managed with GNU Stow.
 ## Quick install (one-liner)
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/reimiii/.dotfiles/master/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/reimiii/.dotfiles/main/install.sh)
 ```
 
 What it does:

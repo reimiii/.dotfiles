@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# scrip buat select multi file dan di kasih tau
+# name file, path, root project, klo udh di plih
+# masuk ke clipboard
+#
+# umm kek nya gini
+temp_file=$(mktemp)
+
+fd -t f --exclude .git/ | fzf --multi | while read file; do
+
+  echo "Root Project: $(basename "$PWD")/" >> "$temp_file"
+  echo "Path: $(dirname "$file")/" >> "$temp_file"
+  echo "File: $(basename "$file")" >> "$temp_file"
+  echo "Isi File: " >> "$temp_file"
+
+  # print file..
+  cat "$file" >> "$temp_file"
+  
+  # Menambahkan pemisah antar file
+  echo >> "$temp_file"
+  echo "====================" >> "$temp_file"
+  echo >> "$temp_file"
+  
+done
+
+# di copy ke clip systm
+xclip -selection clipboard < "$temp_file"
+
+# jan lupa d hapus
+rm "$temp_file"
+
+# kek nya 0 klo 1 buat gagal
+exit 0

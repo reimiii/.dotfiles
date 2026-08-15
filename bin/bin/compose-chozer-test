@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# Path to your mydb file
+mydb_file=~/bin/mydb
+
+# Function to check if a service is running
+check_running() {
+    local service=$1
+    if docker ps --filter "name=${service}" --format "{{.Names}}" | grep -q "${service}"; then
+        echo "${service} (running)"
+    else
+        echo "${service}"
+    fi
+}
+
+# Update the mydb file with the running status
+update_mydb() {
+    local tmp_file=$(mktemp)
+    while IFS= read -r service; do
+        check_running "$service" >> "$tmp_file"
+    done < "$mydb_file"
+    mv "$tmp_file" "$mydb_file"
+}
+
+# Restore mydb file to its original state (remove (running) status)
+restore_mydb() {
+    cp "${mydb_file}.bak" "$mydb_file"
+}
+
+# Path to your compose files
+comp=$(find ~/compose-dev/ -mindepth 2 -maxdepth 2 -type f ! -path '*/.git/*')
+
+# Backup the original mydb file
+cp "$mydb_file" "${mydb_file}.bak"
+
+# Update the mydb file before showing the selection
+update_mydb
+
+# Show the list using fzf
+selected=$(cat "$mydb_file" | fzf)
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+# Get the actual service name (without the "(running)" part)
+service_name=$(echo "$selected" | sed 's/ (running)//')
+
+yaml_file=$(echo "$comp" | grep -i "$service_name")
+if [[ -z $yaml_file ]]; then
+    echo "No matching compose file found for $service_name"
+    exit 1
+fi
+
+if ! [ -z "$TMUX" ]; then
+    # Run Docker Compose in a new tmux window and wait for it to stop
+    tmux new-window -d -n "compose-$service_name" "echo 'Running docker-compose with $yaml_file' && docker compose -f \"$yaml_file\" up --remove-orphans; read -p 'Press Enter to close this window...'"
+
+    # Wait for the tmux window to stop
+    while tmux list-windows -F "#{window_name}" | grep -q "compose-$service_name"; do
+        sleep 1
+    done
+
+    # Restore the mydb file to its original state
+    restore_mydb
+else
+    echo "This operation must be done in a tmux session"
+    exit 1
+fi
+

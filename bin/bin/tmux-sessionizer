@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Root home -> hanya level 1
+HOME_DIRS=$(find "$HOME" -mindepth 1 -maxdepth 1 -type d,l 2>/dev/null)
+
+# Tambahan direktori nested -> harus manual ditulis di sini
+SEARCH_DIRS=(
+  "$HOME/.config"
+  "$HOME/Dev"
+  "$HOME/Work"
+  "$HOME/Personal"
+  "/home"
+)
+
+DEFAULT_CONF="$HOME/.tmux.conf"
+
+# Scan direktori di SEARCH_DIRS, tetap hanya 1 level dalam
+NESTED_DIRS=$(find "${SEARCH_DIRS[@]}" -mindepth 1 -maxdepth 1 -type d,l 2>/dev/null)
+
+# Gabungkan semua kandidat
+session=$(printf "%s\n%s\n" "$HOME_DIRS" "$NESTED_DIRS" | sort -u | fzf) || exit 1
+
+# Normalisasi nama session
+session_base=$(basename "$session" | sed 's/[^a-zA-Z0-9_]/_/g')
+session_hash=$(printf "%s" "$session" | md5sum | cut -c1-6)
+session_name="${session_base}_${session_hash}"
+
+if [ -z "${TMUX:-}" ]; then
+  if ! tmux has-session -t "$session_name" 2>/dev/null; then
+    exec tmux -f "$DEFAULT_CONF" new-session -s "$session_name" -c "$session"
+  else
+    exec tmux -f "$DEFAULT_CONF" attach-session -t "$session_name"
+  fi
+fi
+
+if ! tmux has-session -t "$session_name" 2>/dev/null; then
+  tmux -f "$DEFAULT_CONF" new-session -ds "$session_name" -c "$session"
+fi
+
+tmux -f "$DEFAULT_CONF" switch-client -t "$session_name"

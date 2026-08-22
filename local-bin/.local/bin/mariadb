@@ -1,0 +1,12 @@
+#!/bin/sh
+args=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --host=*) shift ;;
+    --host) shift; shift ;;
+    --port=*) shift ;;
+    --port) shift; shift ;;
+    *) args="$args \"$1\""; shift ;;
+  esac
+done
+eval exec docker exec -i mariadb12 mariadb $args

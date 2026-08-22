@@ -4,7 +4,7 @@ set -euo pipefail
 # Bootstrap: curl -fsSL <raw-url>/install.sh | bash
 # 1. cek dependensi (wajib: ansible-vault, git, stow)
 # 2. clone ~/.dotfiles (kalau belum ada)
-# 3. stow bin/ + idea/, symlink tmux.conf
+# 3. stow bin/ + local-bin/ + idea/, symlink tmux.conf
 # 4. jalankan setup.sh (clone vault, decrypt password, install secrets, switch ke SSH)
 
 DOTFILES="$HOME/.dotfiles"
@@ -37,7 +37,7 @@ fi
 
 echo "==> Installing configs (stow)"
 cd "$DOTFILES"
-stow bin/ idea/
+stow bin/ idea/ local-bin/
 ln -sf "$DOTFILES/tmux-conf/.tmux.conf" "$HOME/.tmux.conf"
 
 echo "==> Running setup.sh (secrets: clone vault + decrypt)"

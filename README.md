@@ -1,4 +1,4 @@
-# dotfiles - ze noir
+# dotfiles - ze noir - night
 
 Personal dotfiles managed with GNU Stow.
 
